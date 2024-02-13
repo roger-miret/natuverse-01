@@ -19,10 +19,12 @@ export class HeaderComponent {
   authService=inject(AuthService);
 
   isLoggedIn$!:Observable<boolean>;
+  currentuser$!:Observable<any>; //tipejar
   
   ngOnInit(){
     this.authService.getCurrentSession();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.currentuser$ = this.authService.currentUser$;
   }
 
   signout(){

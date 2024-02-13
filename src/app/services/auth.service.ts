@@ -12,11 +12,29 @@ export class AuthService {
 
   pendingEmail:undefined|string;
 
+  //molaria unir isLoggedIn i currentUser perquè un reaccionés als canvis de l'altre
   isLoggedInSubj = new BehaviorSubject<boolean>(false);//tipejar
   isLoggedIn$ = this.isLoggedInSubj.asObservable();
+
+  currentuserSubj = new BehaviorSubject<any>('');
+  currentUser$ = this.currentuserSubj.asObservable();
   // signinDetails:any;
 
+  async getCurrentAuthenticatedUser() {
+    try {
+      const { username, userId, signInDetails } = await getCurrentUser();
+      console.log(`The username: ${username}`);
+      console.log(`The userId: ${userId}`);
+      console.log(`The signInDetails: ${signInDetails}`);
+      this.isLoggedInSubj.next(true);
+      this.currentuserSubj.next(username);//he de traspassar-ho tot, no sols username
+    } catch (err) {
+      console.log(err);
+      console.log('no hi ha usuari autenticat');
+    }
+  }
 
+  //POTSER NO CAL
   async getCurrentSession() {
     try {
       const { accessToken, idToken } = (await fetchAuthSession({ forceRefresh: true })).tokens ?? {};
@@ -39,7 +57,9 @@ export class AuthService {
       const { isSignedIn, nextStep } = await signIn({ username, password });
       if (isSignedIn) {
         this.router.navigate(['/mock-turistear']);
+        alert('signin successful!');
         this.isLoggedInSubj.next(true);
+        this.getCurrentAuthenticatedUser();
       } else {
         alert('Signin successful! Next step:'+nextStep);
       }
@@ -100,6 +120,7 @@ export class AuthService {
       if(signInOutput){
         alert('You are now logged in!');
         this.isLoggedInSubj.next(true);
+        this.getCurrentAuthenticatedUser();
         this.router.navigate(['/mock-turistear']);
       }
     } catch (error) {
@@ -114,6 +135,7 @@ export class AuthService {
         alert('signout completed!');
         this.router.navigate(['home'])});
         this.isLoggedInSubj.next(false);
+        this.currentuserSubj.next(undefined);
     } catch (error) {
       console.log('error signing out: ', error);
     }
