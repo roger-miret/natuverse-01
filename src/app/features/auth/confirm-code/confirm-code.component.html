@@ -1,0 +1,10 @@
+<mat-card>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Code</mat-label>
+        <input type="string" matInput formControlName="code" required>
+        <mat-error *ngIf="form.controls['code'].errors">Enter the code you were sent though email.</mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!form.valid" (click)="signUpConfirm()">Submit code to signup</button>
+    </form>
+  </mat-card>

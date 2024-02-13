@@ -1,1 +1,14 @@
-<p>signin works!</p>
+<div>
+    <h2>Inici de Sessió</h2>
+    <form [formGroup]="signinForm" (ngSubmit)="loginOnSubmit()">
+      <div>
+        <label for="email">Correu Electrònic:</label>
+        <input type="email" formControlName="email">
+      </div>
+      <div>
+        <label for="password">Contrasenya:</label>
+        <input type="password" formControlName="password">
+      </div>
+      <button type="submit">Iniciar Sessió</button>
+    </form>
+  </div>

@@ -1,1 +1,22 @@
-<p>signup works!</p>
+<mat-card>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" required>
+        <mat-error *ngIf="form.controls['password'].errors">Password
+          must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" required>
+        <mat-error
+          *ngIf="form.controls['confirmPassword'].errors  && form.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
+          don't match</mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!form.valid" (click)="signUp()">Sign up</button>
+    </form>
+  </mat-card>

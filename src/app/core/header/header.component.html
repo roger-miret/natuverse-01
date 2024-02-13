@@ -2,9 +2,15 @@
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
       <mat-icon>menu</mat-icon>
     </button>
-    <span>My App</span>
+    <span routerLink="">My App</span>
     <span class="example-spacer"></span>
-    <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    @if(isLoggedIn$|async){
+    <button (click)="signout()">Signout</button>
+    }@else{
+    <a routerLink="auth/signin">Signin</a>
+    <a routerLink="auth/signup">Signup</a>
+    }
+    <button routerLink="auth/signin" mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
       <i class="material-icons">account_circle</i>
     </button>
     <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
