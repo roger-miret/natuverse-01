@@ -11,7 +11,7 @@ export const isLoggedInGuard: CanActivateFn = async () => {
     
   try{
     await getCurrentUser();
-    alert('GAURD: OK!');
+    alert('GUARD: OK!');
     return true;
   }catch{
     alert('GUARD: NOT LOGGED IN');

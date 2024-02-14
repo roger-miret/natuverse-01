@@ -43,7 +43,7 @@ export class AuthService {
       console.log(`The username: ${username}`);
       console.log(`The userId: ${userId}`);
       console.log(`The signInDetails: ${signInDetails}`);//Abans això retornava valor, ara no ('undefined')(?)
-      // this.signinDetails=signInDetails;
+      this.signinDetails=signInDetails;
       this.isLoggedInSubj.next(true);
       this.currentuserSubj.next(username);//he de traspassar-ho tot, no sols username
     } catch (err) {
@@ -55,28 +55,30 @@ export class AuthService {
   }
 
   //POTSER NO CAL
-  // async getCurrentSession() {
-  //   // this.auth_loadingSubj.next(true);
-  //   this.auth_loading.set(true);
+  async getCurrentSession() {
+    // this.auth_loadingSubj.next(true);
+    this.auth_loading.set(true);
 
-  //   try {
-  //     const { accessToken, idToken } = (await fetchAuthSession({ forceRefresh: true })).tokens ?? {};
-  //     if(idToken){
-  //       this.isLoggedInSubj.next(true);
-  //       this.currentuserSubj.next(idToken);
-  //     }else{
-  //       this.isLoggedInSubj.next(false);
-  //       this.currentuserSubj.next(null);
-  //     }
-  //     console.log('access token: '+accessToken);
-  //     console.log(idToken);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  //   // this.auth_loadingSubj.next(false);
-  //   this.auth_loading.set(false);
+    try {
+      const { accessToken, idToken } = (await fetchAuthSession({ forceRefresh: true })).tokens ?? {};
+      if(idToken){
+        this.isLoggedInSubj.next(true);
+        this.currentuserSubj.next(idToken);
+        this.tokenSubj.next(idToken);
+      }else{
+        this.isLoggedInSubj.next(false);
+        this.currentuserSubj.next(null);
+        this.tokenSubj.next(null);
+      }
+      console.log('access token: '+accessToken);
+      console.log('id token'+idToken);
+    } catch (err) {
+      console.log(err);
+    }
+    // this.auth_loadingSubj.next(false);
+    this.auth_loading.set(false);
 
-  // }
+  }
 
   constructor() { }
 

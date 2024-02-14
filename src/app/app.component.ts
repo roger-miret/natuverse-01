@@ -25,7 +25,7 @@ export class AppComponent {
   auth_loading = signal<any>(false);
   
   ngOnInit(){
-    // this.authService.getCurrentSession();
+    this.authService.getCurrentSession();
     this.authService.getCurrentAuthenticatedUser();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.auth_loading = this.authService.auth_loading;
