@@ -3,6 +3,7 @@ import { JWT } from "aws-amplify/auth";
 export interface User {
     sub: string,
     email: string,
+    email_verified:'true'|'false',
     username: string,
     token: JWT,
     turistear: '0' | '1',
