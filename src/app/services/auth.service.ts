@@ -23,6 +23,7 @@ export class AuthService {
 
   auth_loading$ = signal<boolean>(false);
 
+  constructor() { }
 
   //POTSER NO CAL, atès que només obté userId i username, mentre que getCurrentSession obté més dades (token)
   // async getCurrentAuthenticatedUser() {
@@ -74,11 +75,9 @@ export class AuthService {
 
   }
 
-  constructor() { }
-
+  //SIGNIN
   async handleSignIn({ username, password }: SignInInput) {
     this.auth_loading$.set(true);
-
     try {
       const { isSignedIn, nextStep } = await signIn({ username, password });
       if (isSignedIn) {
@@ -99,12 +98,11 @@ export class AuthService {
       alert('Error signing in: '+error);
     }
     this.auth_loading$.set(false);
-
   }
 
+  //SIGNUP
   async signUp(email: string, password: string, taxonomia:0|1, turistear:0|1): Promise<any> {
     this.auth_loading$.set(true);
-
     try {
       const { isSignUpComplete, userId, nextStep } = await signUp({
         username:email,
@@ -132,12 +130,11 @@ export class AuthService {
       alert('error signing up:'+error);
     }
     this.auth_loading$.set(false);
-
   }
 
+  //CONFIRM SIGNUP
   async handleSignUpConfirmation(confirmationCode:string) {
     this.auth_loading$.set(true);
-
     try {
       const { isSignUpComplete, nextStep } = await confirmSignUp({
         username:this.pendingEmail!,
@@ -155,9 +152,9 @@ export class AuthService {
       alert('Error: insert a valid code');
     }
     this.auth_loading$.set(false);
-
   }
 
+  //AUTO SIGN IN (DESPRÉS DE SIGN UP)
   async handleAutoSignIn() {
     this.auth_loading$.set(true);
     try {
@@ -172,9 +169,9 @@ export class AuthService {
       console.log(error);
     }
     this.auth_loading$.set(false);
-
   }
 
+  //SIGNOUT
   async handleSignOut() {
     this.auth_loading$.set(true);
     let signedOut:any=undefined;
@@ -188,7 +185,6 @@ export class AuthService {
       console.log('error signing out: ', error);
     }
     this.auth_loading$.set(false);
-
   }
 
   
