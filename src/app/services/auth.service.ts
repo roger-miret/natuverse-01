@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { signIn, signUp, type SignInInput, ConfirmSignUpInput, confirmSignUp, autoSignIn, signOut, fetchAuthSession } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
+import { jwtDecode } from "jwt-decode";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class AuthService {
   router=inject(Router);
@@ -63,7 +64,7 @@ export class AuthService {
       const { accessToken, idToken } = (await fetchAuthSession({ forceRefresh: true })).tokens ?? {};
       if(idToken){
         this.isLoggedInSubj.next(true);
-        this.currentuserSubj.next(idToken);
+        this.currentuserSubj.next(idToken.payload['email']);
         this.tokenSubj.next(idToken);
       }else{
         this.isLoggedInSubj.next(false);
@@ -104,7 +105,7 @@ export class AuthService {
 
   }
 
-  async signUp(email: string, password: string): Promise<any> {
+  async signUp(email: string, password: string, taxonomia:0|1, turistear:0|1): Promise<any> {
     // this.auth_loadingSubj.next(true);
     this.auth_loading.set(true);
 
@@ -114,7 +115,8 @@ export class AuthService {
         password,
         options: {
           userAttributes: {
-            // nickname:nickname
+            'custom:taxonomia': taxonomia.toString(),
+            'custom:turistear': turistear.toString()
           },
           // optional
           autoSignIn: true // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
@@ -131,6 +133,7 @@ export class AuthService {
       console.log(userId);
     } catch (error) {
       console.log('error signing up:', error);
+      alert('error signing up:'+error);
     }
     // this.auth_loadingSubj.next(false);
     this.auth_loading.set(false);

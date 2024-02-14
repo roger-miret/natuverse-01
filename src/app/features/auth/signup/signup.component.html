@@ -17,6 +17,8 @@
           *ngIf="form.controls['confirmPassword'].errors  && form.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
           don't match</mat-error>
       </mat-form-field>
+      <mat-slide-toggle formControlName="taxonomia">Subscribe to TaxonomIA</mat-slide-toggle>
+      <mat-slide-toggle formControlName="turistear">Subscribe to TuristeAR</mat-slide-toggle>
       <button mat-raised-button [disabled]="!form.valid" (click)="signUp()">Sign up</button>
     </form>
   </mat-card>

@@ -5,11 +5,12 @@ import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
 import { NgIf } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule, MatCard, MatFormField, MatInputModule, MatLabel, MatError],
+  imports: [NgIf, ReactiveFormsModule, MatCard, MatFormField, MatInputModule, MatSlideToggleModule, MatLabel, MatError],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -27,14 +28,22 @@ export class SignupComponent {
       email: ['', [Validators.email, Validators.required]],
       password: ['', Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
       confirmPassword: ['', [Validators.required, this.passwordConfirmedValidator()]],
-    })
+      taxonomia: [false, [Validators.required]],
+      turistear: [true, [Validators.required]]
+    });
   }
 
   signUp() {
+
+    const taxonomiaValue = this.form.value.taxonomia ? 1 : 0;
+    const turistearValue = this.form.value.turistear ? 1 : 0;
+
     if (this.form.valid) {
       this.authService.signUp( //pro email, username, pw
         this.form.value.email,
-        this.form.value.password
+        this.form.value.password,
+        taxonomiaValue,
+        turistearValue,
       );
     }
   }
