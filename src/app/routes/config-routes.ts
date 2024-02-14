@@ -1,6 +1,6 @@
 import { Route } from "@angular/router";
-import { AccountComponent } from "../features/settings/account/account.component";
-import { SettingsComponent } from "../features/settings/settings/settings.component";
+import { AccountComponent } from "../features/config/account/account.component";
+import { SettingsComponent } from "../features/config/settings/settings.component";
 
 
 export const SETTINGS_ROUTES: Route[] = [

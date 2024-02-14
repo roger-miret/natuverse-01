@@ -2,7 +2,6 @@ import { Route } from "@angular/router";
 import { SigninComponent } from "../features/auth/signin/signin.component";
 import { SignupComponent } from "../features/auth/signup/signup.component";
 import { ConfirmCodeComponent } from "../features/auth/confirm-code/confirm-code.component";
-import { isLoggedInGuard } from "../shared/guards/is-logged-in.guard";
 import { isNotLoggedInGuard } from "../shared/guards/is-not-logged-in.guard";
 
 

@@ -8,6 +8,7 @@
       <span>Pending confirmation</span>
     } -->
     @if(isLoggedIn$|async){
+      <a routerLink="/settings">Settings</a>
     <button (click)="signout()">Signout</button>
     <span>Hola, {{email$|async}}!</span>
     }@else{
