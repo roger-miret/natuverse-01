@@ -15,6 +15,7 @@ export const isLoggedInGuard: CanActivateFn = async () => {
     return true;
   }catch{
     alert('GUARD: NOT LOGGED IN');
+    router.navigate(['/auth/signin']);
     return false;
   }  
 };
