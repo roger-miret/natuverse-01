@@ -5,6 +5,6 @@ import { SettingsComponent } from "../features/settings/settings/settings.compon
 
 export const SETTINGS_ROUTES: Route[] = [
     { path: '', redirectTo: 'settings', pathMatch: 'full' },
-    {path: 'settings', component: SettingsComponent},
-    {path: 'account', component: AccountComponent}
+    { path: 'settings', component: SettingsComponent },
+    { path: 'account', component: AccountComponent }
 ];

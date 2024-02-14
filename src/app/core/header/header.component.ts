@@ -21,8 +21,8 @@ export class HeaderComponent {
   isLoggedIn$!:Observable<boolean>;
   currentuser$!:Observable<any>; //tipejar
   
+  
   ngOnInit(){
-    this.authService.getCurrentSession();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.currentuser$ = this.authService.currentUser$;
   }
