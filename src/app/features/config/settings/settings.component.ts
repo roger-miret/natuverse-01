@@ -67,21 +67,4 @@ export class SettingsComponent {
     });
   }
 
-  //repetit de signup component
-  private passwordConfirmedValidator() {
-    return (formGroup: FormGroup) => {
-      const passwordField = this.form?.controls['password'];
-      if (!passwordField || (formGroup.errors && !formGroup.errors['passwordConfirmed'])) {
-        return;
-      }
-      if (formGroup.value !== passwordField.value) {
-        return {
-          passwordConfirmed: true,
-        }
-      } else {
-        return null;
-      }
-    }
-  }
-
 }
