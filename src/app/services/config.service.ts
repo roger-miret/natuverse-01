@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { UpdateUserAttributeOutput, UpdateUserAttributesInput, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
+import { UpdateUserAttributeOutput, UpdateUserAttributesInput, deleteUser, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
 import { mutableAttributes } from '../models/user';
 import { AuthService } from './auth.service';
 
@@ -25,4 +25,16 @@ export class ConfigService {
       console.log(error);
     }
   }
+
+    //confirmation needs to be implemented
+    async handleDeleteUser() {
+      try {
+        await deleteUser();
+        alert('user deleted!');
+        location.reload();
+      } catch (error) {
+        console.log(error);
+        alert('error when trying to delete account');
+      }
+    }
 }

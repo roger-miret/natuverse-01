@@ -48,6 +48,11 @@ updateEmailAndPassword(){
   console.log('mock of updating email and password; confirmation needs to be implemented');
 }
 
+//NEEDS CONFIRMATION TO BE IMPLEMENTED
+deleteAccount(){
+  this.configService.handleDeleteUser();
+}
+
   //repetit de signup component
   private passwordConfirmedValidator() {
     return (formGroup: FormGroup) => {
