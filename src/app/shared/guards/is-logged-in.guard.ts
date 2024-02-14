@@ -16,18 +16,5 @@ export const isLoggedInGuard: CanActivateFn = async () => {
   }catch{
     alert('GUARD: NOT LOGGED IN');
     return false;
-  }
-  //El problema d'utilitzar el subject és que el guarda s'aplica abans, per això usem localStorage
-    // return authService.isLoggedIn$.pipe(tap(isLoggedIn=>
-    //   {
-    //       if (isLoggedIn) {
-    //       alert('logged in guard: ok!')
-    //       return true;
-    //     }
-    //     router.navigate(['/auth/signin']);
-    //     alert('logged in guard: NOT LOGGED IN!')
-    //     return false;
-    //   }
-    //   ));
-  
+  }  
 };

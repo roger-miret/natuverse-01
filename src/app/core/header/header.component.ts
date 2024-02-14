@@ -26,7 +26,9 @@ export class HeaderComponent {
   
   ngOnInit(){
     this.isLoggedIn$ = this.authService.isLoggedIn$;
-    this.isVerified$ = this.authService.user$.pipe(map(user=>user!.email_verified));
+    // this.isVerified$ = this.authService.user$.pipe(map(user=>{
+    //   return user ? user!.email_verified : false;
+    // }));
     this.email$ = this.authService.user$.pipe(map(user=>user!.email));
     this.vm$ = combineLatest([this.isLoggedIn$, this.isVerified$, this.email$]);
   }
