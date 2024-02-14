@@ -1,1 +1,43 @@
-<p>settings works!</p>
+<!-- email
+password
+dark
+lang
+turistear
+taxonomia -->
+<mat-card>
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" required>
+      </mat-form-field>
+      <!-- <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input type="password" matInput formControlName="password" required>
+        <mat-error *ngIf="form.controls['password'].errors">Password
+          must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Confirm Password</mat-label>
+        <input type="password" matInput formControlName="confirmPassword" required>
+        <mat-error
+          *ngIf="form.controls['confirmPassword'].errors  && form.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
+          don't match</mat-error>
+      </mat-form-field> -->
+      <mat-slide-toggle formControlName="taxonomia">Subscribe to TaxonomIA</mat-slide-toggle>
+      <mat-slide-toggle formControlName="turistear">Subscribe to TuristeAR</mat-slide-toggle>
+      <mat-slide-toggle formControlName="dark_mode_pref">Dark mode</mat-slide-toggle>
+      <mat-form-field>
+        <mat-label>LANGUAGES</mat-label>
+        <mat-select formControlName="language">
+          <mat-select-trigger>
+            {{form.value.language}}
+          </mat-select-trigger>
+          @for (language of languages; track $index) {
+        <mat-option [value]="language">{{language}}</mat-option>
+      }
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button [disabled]="!form.valid" (click)="updateUser()">Update config</button>
+    </form>
+  </mat-card>

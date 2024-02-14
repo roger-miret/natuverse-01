@@ -10,11 +10,12 @@ Amplify.configure(amplifyconfig);
 import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthService } from './services/auth.service';
+import { ConfigService } from './services/config.service';
 
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimationsAsync(), 
-  importProvidersFrom(ReactiveFormsModule), AuthService]
+  importProvidersFrom(ReactiveFormsModule), AuthService, ConfigService]
 };

@@ -4,8 +4,7 @@ import { signIn, signUp, type SignInInput, ConfirmSignUpInput, confirmSignUp, au
 import { getCurrentUser } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
-import { UserOrNull } from '../models/user';
-import { stringToBoolean } from '../shared/utils/toBoolean';
+import { language, UserOrNull } from '../models/user';
 import { ROUTE_TAXONOMIA, ROUTE_TURISTEAR } from '../routes/route-names';
 import { resolveNavigation } from '../shared/helpers/navigation';
 
@@ -58,11 +57,13 @@ export class AuthService {
         this.userSubj.next({
           sub: idToken.payload['sub']!,
           email: idToken.payload['email']! as string,
-          email_verified: stringToBoolean(idToken.payload['email_verified'] as string),
+          email_verified: idToken.payload['email_verified'] as 'true'|'false',
           username: idToken.payload['cognito:username']!  as string,
           token: idToken!,
           turistear: idToken.payload['custom:turistear']!  as '0'|'1',
           taxonomia: idToken.payload['custom:taxonomia']! as '0'|'1',
+          dark_mode_pref: idToken.payload['custom:dark_mode_pref']! as '0'|'1',
+          language: idToken.payload['custom:language']! as language,
           isLoggedIn: true,
         });
         this.isLoggedInSubj.next(true);
@@ -76,9 +77,20 @@ export class AuthService {
       this.isLoggedInSubj.next(false);
     }
     this.auth_loading$.set(false);
-
+    //temporal mentre faig config
+    this.router.navigate(['/config']);
   }
 
+  //GET USER ATTRIBUTES
+  async handleFetchUserAttributes() {
+    try {
+      const userAttributes = await fetchUserAttributes();
+      console.log(userAttributes);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   //SIGNIN
   async handleSignIn({ username, password }: SignInInput) {
     this.auth_loading$.set(true);
@@ -109,7 +121,9 @@ export class AuthService {
         options: {
           userAttributes: {
             'custom:taxonomia': taxonomia.toString(),
-            'custom:turistear': turistear.toString()
+            'custom:turistear': turistear.toString(),
+            'custom:dark_mode_pref': '0',
+            'custom:language': 'cat'
           },
           // optional
           autoSignIn: true // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }

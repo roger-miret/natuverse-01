@@ -43,7 +43,7 @@ export class SignupComponent {
         this.form.value.email,
         this.form.value.password,
         taxonomiaValue,
-        turistearValue,
+        turistearValue
       );
     }
   }
