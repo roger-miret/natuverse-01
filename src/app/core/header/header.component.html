@@ -6,7 +6,7 @@
     <span class="example-spacer"></span>
     @if(isLoggedIn$|async){
     <button (click)="signout()">Signout</button>
-    <span>Hola, {{currentuser$|async}}!</span>
+    <span>Hola, {{email$|async}}!</span>
     }@else{
     <a routerLink="auth/signin">Signin</a>
     <a routerLink="auth/signup">Signup</a>

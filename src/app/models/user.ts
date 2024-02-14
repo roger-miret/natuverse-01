@@ -1,5 +1,15 @@
-// export interface User{
-    
-// }
+import { JWT } from "aws-amplify/auth";
 
-export type User = any;
+export interface User {
+    sub: string,
+    email: string,
+    username: string,
+    token: JWT,
+    turistear: '0' | '1',
+    taxonomia: '0' | '1',
+    isLoggedIn: boolean,
+  }
+  
+  // Aquest tipus pot ser User o null
+  export type UserOrNull = User | null;
+  

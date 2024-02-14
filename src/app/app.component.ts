@@ -26,9 +26,8 @@ export class AppComponent {
   
   ngOnInit(){
     this.authService.getCurrentSession();
-    this.authService.getCurrentAuthenticatedUser();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
-    this.auth_loading = this.authService.auth_loading;
+    this.auth_loading = this.authService.auth_loading$;
   }
 
   title = 'natuverse-01';

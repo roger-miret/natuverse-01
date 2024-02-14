@@ -14,9 +14,11 @@ export const isTuristearGuard: CanActivateFn = async (route, state) => {
       return true;
     }
     alert('User NOT subscribed to Turistear!');
+    //navigate to settings o subscribe
     return false;
   } catch (error) {
     alert("Couldn't fetch user attributes!");
+    //navigate to settings o subscribe
     console.log(error);
   }
 
