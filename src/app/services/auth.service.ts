@@ -6,6 +6,8 @@ import { BehaviorSubject } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
 import { UserOrNull } from '../models/user';
 import { stringToBoolean } from '../shared/utils/toBoolean';
+import { ROUTE_TAXONOMIA, ROUTE_TURISTEAR } from '../routes/route-names';
+import { resolveNavigation } from '../shared/helpers/navigation';
 
 @Injectable({
   providedIn: 'root'
@@ -85,13 +87,8 @@ export class AuthService {
       if (isSignedIn) {
         alert('signin successful!');
         await this.getCurrentSession(); //abans tenia fetchAttributes
-        if(this.userSubj.getValue()!['turistear']=='1'){
-          this.router.navigate(['/mock-turistear']);
-        }else if(this.userSubj.getValue()!['taxonomia']=='1'){
-          this.router.navigate(['/mock-taxonomia']);
-        }else{
-          this.router.navigate(['/home']);
-        }
+        const user = this.userSubj.getValue();
+        resolveNavigation(user, this.router);
       }
       else {//no sé si cal
         alert('Signin looks successful but returned isSignedIn is false... Next step:'+nextStep);
@@ -164,8 +161,8 @@ export class AuthService {
       alert('autosignin completat!');
       if(signInOutput.isSignedIn){
         alert('You are now logged in!');
-        this.getCurrentSession();
-        this.router.navigate(['/mock-turistear']);
+        await this.getCurrentSession();
+        resolveNavigation(this.userSubj.getValue(), this.router);
       }
     } catch (error) {
       console.log(error);
