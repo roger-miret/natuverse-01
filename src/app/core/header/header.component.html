@@ -4,6 +4,9 @@
     </button>
     <span routerLink="">My App</span>
     <span class="example-spacer"></span>
+    @if(isVerified$|async){
+      <span>Pending confirmation</span>
+    }
     @if(isLoggedIn$|async){
     <button (click)="signout()">Signout</button>
     <span>Hola, {{email$|async}}!</span>

@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Observable, map } from 'rxjs';
+import { Observable, combineLatest, map } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 
 @Component({
@@ -19,12 +19,16 @@ export class HeaderComponent {
   authService=inject(AuthService);
 
   isLoggedIn$!:Observable<boolean>;
-  email$!:Observable<any>; //tipejar
+  isVerified$!:Observable<boolean>;
+  email$!:Observable<string>; 
+  vm$!:Observable<any>;
   
   
   ngOnInit(){
     this.isLoggedIn$ = this.authService.isLoggedIn$;
+    this.isVerified$ = this.authService.user$.pipe(map(user=>user!.email_verified));
     this.email$ = this.authService.user$.pipe(map(user=>user!.email));
+    this.vm$ = combineLatest([this.isLoggedIn$, this.isVerified$, this.email$]);
   }
 
   signout(){

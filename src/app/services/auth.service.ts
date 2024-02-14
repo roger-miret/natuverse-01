@@ -5,6 +5,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { jwtDecode } from "jwt-decode";
 import { UserOrNull } from '../models/user';
+import { stringToBoolean } from '../shared/utils/toBoolean';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class AuthService {
         this.userSubj.next({
           sub: idToken.payload['sub']!,
           email: idToken.payload['email']! as string,
-          email_verified: idToken.payload['email_verified'] as 'true'|'false',
+          email_verified: stringToBoolean(idToken.payload['email_verified'] as string),
           username: idToken.payload['cognito:username']!  as string,
           token: idToken!,
           turistear: idToken.payload['custom:turistear']!  as '0'|'1',
