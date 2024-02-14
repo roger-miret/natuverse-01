@@ -7,12 +7,14 @@ import { NgIf } from '@angular/common';
 import { MatCard } from '@angular/material/card';
 import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { DialogsService } from '../../../services/dialogs.service';
 
 @Component({
   selector: 'app-account',
   standalone: true,
   imports: [NgIf, ReactiveFormsModule, 
-    MatCard, MatFormField, MatInputModule, MatLabel, MatError],
+    MatCard, MatFormField, MatInputModule, MatLabel, MatError, MatButtonModule],
   templateUrl: './account.component.html',
   styleUrl: './account.component.scss'
 })
@@ -20,6 +22,7 @@ export class AccountComponent {
   fb=inject(FormBuilder);
   authService=inject(AuthService);
   configService = inject(ConfigService);
+  dialogService = inject(DialogsService);
 
   form!:FormGroup;
   languages=langArr;
@@ -50,7 +53,8 @@ updateEmailAndPassword(){
 
 //NEEDS CONFIRMATION TO BE IMPLEMENTED
 deleteAccount(){
-  this.configService.handleDeleteUser();
+  // this.configService.handleDeleteUser();
+  this.configService.openConfirmDeleteModal();
 }
 
   //repetit de signup component
