@@ -28,13 +28,15 @@ export class ConfigService {
 
     //confirmation needs to be implemented
     async handleDeleteUser() {
-      try {
-        await deleteUser();
-        alert('user deleted!');
-        location.reload();
-      } catch (error) {
-        console.log(error);
-        alert('error when trying to delete account');
+      if(confirm("Are you sure to delete your account??")) {
+        try {
+          await deleteUser();
+          alert('user deleted!');
+          location.reload();
+        } catch (error) {
+          console.log(error);
+          alert('error when trying to delete account');
+        }
       }
     }
 }
