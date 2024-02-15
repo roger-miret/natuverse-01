@@ -29,7 +29,6 @@ export class AccountComponent implements ComponentCanDeactivate{
   
   showCodeInput=false;
 
-  //PENDENT
   canLeave=true;
   canDeactivate(): boolean {
     return this.canLeave;

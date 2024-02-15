@@ -7,6 +7,7 @@ import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { resetPassword } from 'aws-amplify/auth';
 import { Router } from '@angular/router';
+import { ComponentCanDeactivate } from '../../../shared/guards/confirm-before-leaving.guard';
 
 @Component({
   selector: 'app-account-recovery',
@@ -15,15 +16,20 @@ import { Router } from '@angular/router';
   templateUrl: './account-recovery.component.html',
   styleUrl: './account-recovery.component.scss'
 })
-export class AccountRecoveryComponent {
+export class AccountRecoveryComponent implements ComponentCanDeactivate{
   fb=inject(UntypedFormBuilder);
   accountRecovery = inject(AccountRecoveryService);
   router=inject(Router);
 
-  showCodeInput=false;
   form!:FormGroup;
   codeForm!:FormGroup;
   
+  showCodeInput=false;
+  canLeave=true;
+  canDeactivate(): boolean {
+    return this.canLeave;
+  }
+
   constructor(
     ) { }
   
@@ -44,6 +50,7 @@ export class AccountRecoveryComponent {
     const passwordReseted = await this.accountRecovery.handleResetPassword(this.form.value.email);
     if(passwordReseted){
       this.showCodeInput = true;
+      this.canLeave=false;
       alert('Email was sent to recover password');
     }else{
       alert('Error when trying to recover password. Try again.');
@@ -57,6 +64,7 @@ export class AccountRecoveryComponent {
     confirmationCode:this.codeForm.value.code});
     if(accountIsRecovered){
       alert('Account reseted! Now you may login with email and new password.');
+      this.canLeave=true;
       this.router.navigate(['/auth/signin']);
     }
   }
