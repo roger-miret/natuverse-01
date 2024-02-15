@@ -20,7 +20,7 @@ export class HeaderComponent {
 
   isLoggedIn$!:Observable<boolean>;
   isVerified$!:Observable<boolean>;
-  email$!:Observable<string>; 
+  email$!:Observable<string|null>; 
   vm$!:Observable<any>;
   
   
@@ -29,7 +29,7 @@ export class HeaderComponent {
     // this.isVerified$ = this.authService.user$.pipe(map(user=>{
     //   return user ? user!.email_verified : false;
     // }));
-    this.email$ = this.authService.user$.pipe(map(user=>user!.email));
+    this.email$ = this.authService.user$.pipe(map(user=>user? user.email : null));
     this.vm$ = combineLatest([this.isLoggedIn$, this.isVerified$, this.email$]);
   }
 

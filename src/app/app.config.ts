@@ -15,6 +15,7 @@ import { DialogsService } from './services/dialogs.service';
 import { NavigationService } from './services/navigation.service';
 import { ErrorHandlingService } from './services/error-handling.service';
 import { ConfirmBeforeLeavingGuard } from './shared/guards/confirm-before-leaving.guard';
+import { AccountRecoveryService } from './services/account-recovery.service';
 
 
 
@@ -22,6 +23,6 @@ import { ConfirmBeforeLeavingGuard } from './shared/guards/confirm-before-leavin
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimationsAsync(), 
   importProvidersFrom(ReactiveFormsModule),
-  AuthService, ConfigService, DialogsService, 
+  AuthService, ConfigService, AccountRecoveryService, DialogsService, 
   NavigationService, ErrorHandlingService]
 };

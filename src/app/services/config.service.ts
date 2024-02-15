@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { ConfirmUserAttributeInput, UpdatePasswordInput, UpdateUserAttributeOutput, UpdateUserAttributesInput, VerifiableUserAttributeKey, confirmUserAttribute, deleteUser, sendUserAttributeVerificationCode, updatePassword, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
+import { ConfirmResetPasswordInput, ConfirmUserAttributeInput, ResetPasswordOutput, UpdatePasswordInput, UpdateUserAttributeOutput, UpdateUserAttributesInput, VerifiableUserAttributeKey, confirmResetPassword, confirmUserAttribute, deleteUser, resetPassword, sendUserAttributeVerificationCode, updatePassword, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
 import { mutableAttributes } from '../models/user';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -116,7 +116,7 @@ export class ConfigService {
     }
   }
 
-    //confirmation needs to be implemented
+    //DELETE ACCOUNT
     async handleDeleteUser() {
       if(confirm("we will ask again: are you SURE to delete your account??")) {
         try {

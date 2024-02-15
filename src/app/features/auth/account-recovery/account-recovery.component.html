@@ -1,0 +1,27 @@
+<mat-card>
+    @if(!showCodeInput){
+    <form [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" required>
+        <mat-error *ngIf="form.controls['email'].errors">Enter your email to recover account.</mat-error>
+      </mat-form-field>
+      <button mat-raised-button [disabled]="!form.valid" (click)="resetPassword()">Send</button>
+    </form>
+}@else {
+    <form [formGroup]="codeForm">
+        <mat-form-field>
+            <mat-label>New Password</mat-label>
+            <input type="password" matInput formControlName="newPassword" required>
+            <mat-error *ngIf="form.controls['newPassword'] && form.controls['newPassword'].errors">Enter your email to recover account.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Code</mat-label>
+          <input type="string" matInput formControlName="code" required>
+          <mat-error *ngIf="form.controls['code'] && form.controls['code'].errors">Enter your email to recover account.</mat-error>
+        </mat-form-field>
+        <button mat-raised-button [disabled]="!form.valid" (click)="confirmRecovery()">Send</button>
+      </form> 
+}
+  </mat-card>

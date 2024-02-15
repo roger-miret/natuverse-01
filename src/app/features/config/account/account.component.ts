@@ -1,16 +1,13 @@
+import { NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { langArr } from '../../../models/user';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCard } from '@angular/material/card';
+import { MatError, MatFormField, MatLabel } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../services/auth.service';
 import { ConfigService } from '../../../services/config.service';
-import { NgIf } from '@angular/common';
-import { MatCard } from '@angular/material/card';
-import { MatFormField, MatLabel, MatError } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { DialogsService } from '../../../services/dialogs.service';
 import { ComponentCanDeactivate } from '../../../shared/guards/confirm-before-leaving.guard';
-import { UpdatePasswordInput, updatePassword } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-account',
@@ -24,6 +21,7 @@ export class AccountComponent implements ComponentCanDeactivate{
   fb=inject(FormBuilder);
   authService=inject(AuthService);
   configService = inject(ConfigService);
+  
 
   emailForm!:FormGroup;
   pwForm!:FormGroup;
