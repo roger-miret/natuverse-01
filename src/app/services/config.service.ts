@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { ConfirmUserAttributeInput, UpdateUserAttributeOutput, UpdateUserAttributesInput, VerifiableUserAttributeKey, confirmUserAttribute, deleteUser, sendUserAttributeVerificationCode, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
+import { ConfirmUserAttributeInput, UpdatePasswordInput, UpdateUserAttributeOutput, UpdateUserAttributesInput, VerifiableUserAttributeKey, confirmUserAttribute, deleteUser, sendUserAttributeVerificationCode, updatePassword, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
 import { mutableAttributes } from '../models/user';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,6 +38,7 @@ export class ConfigService {
     return this.dialogsService.openConfirmModal(
      'Yes, send me confirmation code to email', 
      'do you really wish to update '+attributeKey+' as '+value+'?')
+     //si al dialog es confirma, actualitza l'atribut i envia codi de confirmació
      .pipe(filter(dialogResult=>dialogResult), switchMap(async res=>{
         try {
           const output = await updateUserAttribute({
@@ -91,7 +92,7 @@ export class ConfigService {
 
   //CONFIRM DELETION MODAL+DELETION
   //unsubscribe!
-  openConfirmDeleteModal(){
+  openConfirmDeleteModal(){//es podria modularitzar passant els args aquí
     this.dialogsService.openConfirmModal(
       `Are you SURE you want to delete your account?`,
       "Confirm delete account"
@@ -100,6 +101,19 @@ export class ConfigService {
         this.handleDeleteUser();
       }
     });
+  }
+
+  async handleUpdatePassword({
+    oldPassword,
+    newPassword
+  }: UpdatePasswordInput) {
+    try {
+      await updatePassword({ oldPassword, newPassword });
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   }
 
     //confirmation needs to be implemented

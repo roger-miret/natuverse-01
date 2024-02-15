@@ -24,24 +24,32 @@ taxonomia -->
         <button mat-raised-button (click)="showCodeInput=!showCodeInput">Cancel</button>
       </form>
     }
-  </mat-card>
       <!-- PASSWORD -->
-      <!-- <mat-form-field>
-        <mat-label>Password</mat-label>
-        <input type="password" matInput formControlName="password" required>
-        <mat-error *ngIf="form.controls['password'].errors">Password
-          must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Confirm Password</mat-label>
-        <input type="password" matInput formControlName="confirmPassword" required>
-        <mat-error
-          *ngIf="form.controls['confirmPassword'].errors  && form.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
-          don't match</mat-error>
-      </mat-form-field> -->
+      <form [formGroup]="pwForm">
+        <div>Update password</div>
+        <mat-form-field>
+          <mat-label>Old password</mat-label>
+          <input type="password" matInput formControlName="oldPassword" required>
+          <mat-error *ngIf="pwForm.controls['oldPassword'].errors">Password
+            must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>New password</mat-label>
+          <input type="password" matInput formControlName="newPassword" required>
+          <mat-error *ngIf="pwForm.controls['newPassword'].errors">New password
+            must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Confirm new password</mat-label>
+            <input type="password" matInput formControlName="confirmPassword" required>
+            <mat-error
+            *ngIf="pwForm.controls['confirmPassword'].errors && pwForm.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
+            don't match</mat-error>
+          </mat-form-field>
+          <mat-error *ngIf="pwForm.controls['oldPassword'].dirty && pwForm.controls['newPassword'].dirty && pwForm.hasError('differentPassword')">New password must be different.</mat-error>
+        <button mat-raised-button [disabled]="!pwForm.valid" (click)="updatePassword()">Update password</button>
+      </form>
+</mat-card>
 
-      
-
-    <!-- DELTE ACCOUNT -->
-    
+    <!-- DELETE ACCOUNT -->
     <button mat-button (click)="deleteAccount()">DELETE ACCOUNT</button>

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { langArr } from '../../../models/user';
 import { AuthService } from '../../../services/auth.service';
 import { ConfigService } from '../../../services/config.service';
@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DialogsService } from '../../../services/dialogs.service';
 import { ComponentCanDeactivate } from '../../../shared/guards/confirm-before-leaving.guard';
+import { UpdatePasswordInput, updatePassword } from 'aws-amplify/auth';
 
 @Component({
   selector: 'app-account',
@@ -25,6 +26,7 @@ export class AccountComponent implements ComponentCanDeactivate{
   configService = inject(ConfigService);
 
   emailForm!:FormGroup;
+  pwForm!:FormGroup;
   emailCodeForm!:FormGroup;
   
   showCodeInput=false;
@@ -42,6 +44,14 @@ export class AccountComponent implements ComponentCanDeactivate{
       // password: ['', Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
       // confirmPassword: ['', [Validators.required, this.passwordConfirmedValidator()]],
     });
+
+
+      this.pwForm = this.fb.group({
+        oldPassword: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+        newPassword: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+        confirmPassword: ['', [Validators.required, this.passwordConfirmedValidator()]]
+      }, { validators: [this.differentPasswordValidator()] });
+    
 
     this.emailCodeForm = this.fb.group({
       code: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(6)]],
@@ -83,26 +93,56 @@ async sendEmailCode(){
   }
 }
 
+async updatePassword(){
+  const passwordIsUpdated = await this.configService.handleUpdatePassword({
+    oldPassword:this.pwForm.value.oldPassword,
+    newPassword:this.pwForm.value.newPassword
+  });
+  if(passwordIsUpdated){
+    alert('Update successful. Log in with new password.');
+    this.canLeave=true;
+    this.authService.handleSignOut();
+  }
+}
+
+
 //NEEDS CONFIRMATION TO BE IMPLEMENTED
 deleteAccount(){
   // this.configService.handleDeleteUser();
   this.configService.openConfirmDeleteModal();
 }
 
-  //repetit de signup component
+  //pràcticament repetit de signup component
   private passwordConfirmedValidator() {
-    return (formGroup: FormGroup) => {
-      const passwordField = this.emailForm?.controls['password'];
-      if (!passwordField || (formGroup.errors && !formGroup.errors['passwordConfirmed'])) {
-        return;
-      }
-      if (formGroup.value !== passwordField.value) {
+    return (formControl: FormControl) => {
+      if(this.pwForm){
+      const newPasswordField = this.pwForm.controls['newPassword'];
+      if (formControl.value !== newPasswordField.value) {
         return {
           passwordConfirmed: true,
         }
       } else {
-        return null;
+        return false
       }
+    }else{
+      return false    
     }
+  }
+  }
+
+  //pràcticament repetida de l'anterior
+  private differentPasswordValidator() {
+    return (formGroup: FormGroup) => {
+      const oldPassword = formGroup.get('oldPassword');
+      const newPassword = formGroup.get('newPassword');
+  
+      // Comprovar si els controls estan definits
+      if (!oldPassword || !newPassword || oldPassword.value === newPassword.value) {
+        return {
+          differentPassword: true
+        };
+      }
+      return null;
+    };
   }
 }
