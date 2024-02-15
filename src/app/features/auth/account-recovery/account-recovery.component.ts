@@ -35,7 +35,8 @@ export class AccountRecoveryComponent {
       //afegir que es validi dues vegades la password
       this.codeForm = this.fb.group({
         newPassword: ['', Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-        code: ['', [Validators.required, Validators.email]]
+        confirmPassword: ['', [Validators.required, this.passwordConfirmedValidator()]],
+        code: ['', [Validators.required]]
       });
     }
 
@@ -57,6 +58,22 @@ export class AccountRecoveryComponent {
     if(accountIsRecovered){
       alert('Account reseted! Now you may login with email and new password.');
       this.router.navigate(['/auth/signin']);
+    }
+  }
+
+  private passwordConfirmedValidator() {
+    return (formGroup: FormGroup) => {
+      const passwordField = this.codeForm?.controls['newPassword'];
+      if (!passwordField || (formGroup.errors && !formGroup.errors['passwordConfirmed'])) {
+        return;
+      }
+      if (formGroup.value !== passwordField.value) {
+        return {
+          passwordConfirmed: true,
+        }
+      } else {
+        return null;
+      }
     }
   }
 

@@ -13,15 +13,20 @@
         <mat-form-field>
             <mat-label>New Password</mat-label>
             <input type="password" matInput formControlName="newPassword" required>
-            <mat-error *ngIf="form.controls['newPassword'] && form.controls['newPassword'].errors">Enter your email to recover account.</mat-error>
+            <mat-error *ngIf="form.controls['newPassword'] && form.controls['newPassword'].errors">Enter new password</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Confirm New Password</mat-label>
+            <input type="password" matInput formControlName="confirmPassword" required>
+            <mat-error *ngIf="form.controls['confirmPassword'] && form.controls['confirmPassword'].errors && form.controls['confirmPassword'].errors['passwordConfirmed']">Confirm new password.</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Code</mat-label>
           <input type="string" matInput formControlName="code" required>
-          <mat-error *ngIf="form.controls['code'] && form.controls['code'].errors">Enter your email to recover account.</mat-error>
+          <mat-error *ngIf="form.controls['code'] && form.controls['code'].errors">Enter the code sent to email.</mat-error>
         </mat-form-field>
-        <button mat-raised-button [disabled]="!form.valid" (click)="confirmRecovery()">Send</button>
+        <button mat-raised-button [disabled]="!codeForm.valid" (click)="confirmRecovery()">Send</button>
       </form> 
 }
   </mat-card>
