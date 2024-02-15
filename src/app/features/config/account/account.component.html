@@ -5,14 +5,28 @@ lang
 turistear
 taxonomia -->
 <mat-card>
-    <form [formGroup]="form">
+  @if(!showCodeInput){
+    <form [formGroup]="emailForm">
         <!-- EMAIL -->
       <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput formControlName="email" required>
       </mat-form-field>
+      <button mat-raised-button [disabled]="!emailForm.valid" (click)="updateEmail()">Update email</button>
+    </form>
+  }@else if(showCodeInput){
+      <form [formGroup]="emailCodeForm">
+        <mat-form-field>
+          <mat-label>Enter confirmation code to update email to {{emailForm.value.email}}</mat-label>
+          <input matInput formControlName="code" required>
+        </mat-form-field>
+        <button mat-raised-button [disabled]="!emailCodeForm.valid" (click)="sendEmailCode()">Send code</button>
+        <button mat-raised-button (click)="showCodeInput=!showCodeInput">Cancel</button>
+      </form>
+    }
+  </mat-card>
       <!-- PASSWORD -->
-      <mat-form-field>
+      <!-- <mat-form-field>
         <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password" required>
         <mat-error *ngIf="form.controls['password'].errors">Password
@@ -24,13 +38,10 @@ taxonomia -->
         <mat-error
           *ngIf="form.controls['confirmPassword'].errors  && form.controls['confirmPassword'].errors['passwordConfirmed']">Passwords
           don't match</mat-error>
-      </mat-form-field>
+      </mat-form-field> -->
 
-      <button mat-raised-button [disabled]="!form.valid" (click)="updateEmailAndPassword()">Update config</button>
-    </form>
+      
 
     <!-- DELTE ACCOUNT -->
     
     <button mat-button (click)="deleteAccount()">DELETE ACCOUNT</button>
-
-  </mat-card>

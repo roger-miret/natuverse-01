@@ -12,11 +12,16 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { AuthService } from './services/auth.service';
 import { ConfigService } from './services/config.service';
 import { DialogsService } from './services/dialogs.service';
+import { NavigationService } from './services/navigation.service';
+import { ErrorHandlingService } from './services/error-handling.service';
+import { ConfirmBeforeLeavingGuard } from './shared/guards/confirm-before-leaving.guard';
 
 
 
 
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideAnimationsAsync(), 
-  importProvidersFrom(ReactiveFormsModule), AuthService, ConfigService, DialogsService]
+  importProvidersFrom(ReactiveFormsModule),
+  AuthService, ConfigService, DialogsService, 
+  NavigationService, ErrorHandlingService]
 };

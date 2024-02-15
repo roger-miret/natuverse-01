@@ -29,9 +29,6 @@ export class SettingsComponent {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: ['', [Validators.email, Validators.required]],
-      // password: ['', Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-      // confirmPassword: ['', [Validators.required, this.passwordConfirmedValidator()]],
       taxonomia: [false, [Validators.required]],
       turistear: [false, [Validators.required]],
       dark_mode_pref: [false, [Validators.required]],
@@ -41,9 +38,6 @@ export class SettingsComponent {
     this.authService.user$.subscribe(user => {
       if(user){
         this.form.patchValue({
-          email: user.email,
-          // password: '',
-          // confirmPassword: '',
           taxonomia: user.taxonomia == '1' ? true : false,
           turistear: user.turistear == '1' ? true : false,
           dark_mode_pref: user.dark_mode_pref == '1' ? true : false,
@@ -58,8 +52,6 @@ export class SettingsComponent {
   updateUser(){
     const formValues = this.form.value;
     this.configService.updateAttributes({
-      email: formValues.email,
-      // password: formValues.password.length >1 ? formValues.password : this.authService.userSubj.g,
       'custom:taxonomia': formValues.taxonomia ? '1' : '0',
       'custom:turistear': formValues.turistear ? '1' : '0',
       'custom:dark_mode_pref': formValues.dark_mode_pref ? '1' : '0',

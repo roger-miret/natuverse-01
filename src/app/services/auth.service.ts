@@ -1,11 +1,8 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { signIn, signUp, type SignInInput, ConfirmSignUpInput, confirmSignUp, autoSignIn, signOut, fetchAuthSession, fetchUserAttributes } from 'aws-amplify/auth';
-import { getCurrentUser } from 'aws-amplify/auth';
+import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, signIn, signOut, signUp, type SignInInput } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
-import { jwtDecode } from "jwt-decode";
 import { language, UserOrNull } from '../models/user';
-import { ROUTE_TAXONOMIA, ROUTE_TURISTEAR } from '../routes/route-names';
 import { resolveNavigation } from '../shared/helpers/navigation';
 
 @Injectable({

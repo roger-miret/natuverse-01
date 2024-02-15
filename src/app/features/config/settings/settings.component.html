@@ -1,16 +1,5 @@
-<!-- email
-password
-dark
-lang
-turistear
-taxonomia -->
 <mat-card>
     <form [formGroup]="form">
-      <!-- S'haurà de treure -->
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" required>
-      </mat-form-field>
       <mat-slide-toggle formControlName="taxonomia">Subscribe to TaxonomIA</mat-slide-toggle>
       <mat-slide-toggle formControlName="turistear">Subscribe to TuristeAR</mat-slide-toggle>
       <mat-slide-toggle formControlName="dark_mode_pref">Dark mode</mat-slide-toggle>

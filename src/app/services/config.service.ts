@@ -1,19 +1,22 @@
 import { Injectable, inject } from '@angular/core';
-import { UpdateUserAttributeOutput, UpdateUserAttributesInput, deleteUser, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
+import { ConfirmUserAttributeInput, UpdateUserAttributeOutput, UpdateUserAttributesInput, VerifiableUserAttributeKey, confirmUserAttribute, deleteUser, sendUserAttributeVerificationCode, updateUserAttribute, updateUserAttributes } from 'aws-amplify/auth';
 import { mutableAttributes } from '../models/user';
 import { AuthService } from './auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogModel, ConfirmationDialogComponent } from '../shared/components/confirmation-dialog/confirmation-dialog.component';
+import { async, filter, map, switchMap } from 'rxjs';
+import { DialogsService } from './dialogs.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
   authService = inject(AuthService);
-  dialog=inject(MatDialog);
+  dialogsService=inject(DialogsService);
 
   constructor() { }
 
+  //UPDATE COMMON ATTRIBUTES (SETTINGS)
   async updateAttributes(attr:mutableAttributes) { //tipejar
     try {
       const attributes = await updateUserAttributes({
@@ -29,22 +32,70 @@ export class ConfigService {
     }
   }
 
+  //UPDATE ONE ATTRIBUTE, OPTIONALLY SEND CONFIRMATION CODE
+  //UPDATE ATTRIBUTE
+  handleUpdateUserAttribute(attributeKey: string, value: string) {
+    return this.dialogsService.openConfirmModal(
+     'Yes, send me confirmation code to email', 
+     'do you really wish to update '+attributeKey+' as '+value+'?')
+     .pipe(filter(dialogResult=>dialogResult), switchMap(async res=>{
+        try {
+          const output = await updateUserAttribute({
+            userAttribute: {
+              attributeKey,
+              value
+            }
+          });
+          this.handleUpdateUserAttributeNextSteps(output);
+          return true;
+        } catch (error) {
+          console.log(error);
+          return false;
+        }
+     }))
+  }
+  
+  //SEND CONFIRMATION CODE
+  handleUpdateUserAttributeNextSteps(output: UpdateUserAttributeOutput) {
+    const { nextStep } = output;
+    switch (nextStep.updateAttributeStep) {
+      case 'CONFIRM_ATTRIBUTE_WITH_CODE':
+        const codeDeliveryDetails = nextStep.codeDeliveryDetails;
+        alert(
+          `Confirmation code was sent to ${codeDeliveryDetails?.deliveryMedium}.`
+        );
+        // Collect the confirmation code from the user and pass to confirmUserAttribute.
+        break;
+      case 'DONE':
+        alert(`attribute was successfully updated.`);
+        break;
+    }
+  }
 
+  //CONFIRM ATTRIBUTE UPDATE WITH CODE
+  async handleConfirmUserAttribute({
+    userAttributeKey,
+    confirmationCode
+  }: ConfirmUserAttributeInput) {
+    try {
+      await confirmUserAttribute({ userAttributeKey, confirmationCode });
+      alert('updated successfully with code. Browser is going to reload to update login statge.');
+      return true;
+      //subscriber should reload
+    } catch (error) {
+      console.log(error);
+      alert(error);
+      return false;
+    }
+  }
 
+  //CONFIRM DELETION MODAL+DELETION
+  //unsubscribe!
   openConfirmDeleteModal(){
-    const message = `Are you sure you want to delete your account?`;
-    //es podria posar títol també en altra variable...
-    const dialogData = new ConfirmDialogModel("Confirm delete account", message);
-
-    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      maxWidth: "400px",
-      data: dialogData
-    });
-
-    //unsubscribe!
-    dialogRef.afterClosed().subscribe(dialogResult => {
-      console.log(dialogResult);
-      alert(dialogResult);
+    this.dialogsService.openConfirmModal(
+      `Are you SURE you want to delete your account?`,
+      "Confirm delete account"
+    ).subscribe(dialogResult => {
       if(dialogResult===true){
         this.handleDeleteUser();
       }
@@ -53,7 +104,7 @@ export class ConfigService {
 
     //confirmation needs to be implemented
     async handleDeleteUser() {
-      if(confirm("Are you sure to delete your account??")) {
+      if(confirm("we will ask again: are you SURE to delete your account??")) {
         try {
           await deleteUser();
           alert('user deleted!');

@@ -14,8 +14,8 @@ export interface User {
   }
 
   export interface mutableAttributes {
-    email: string,
-    // password:string,
+    email?: string,
+    // password?:string,
     'custom:turistear': '0' | '1',
     'custom:taxonomia': '0' | '1',
     'custom:dark_mode_pref': '0' | '1',
