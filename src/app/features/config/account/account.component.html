@@ -31,13 +31,13 @@ taxonomia -->
           <mat-label>Old password</mat-label>
           <input type="password" matInput formControlName="oldPassword" required>
           <mat-error *ngIf="pwForm.controls['oldPassword'].errors">Password
-            must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+            must be at least 8 chars long and have one number, one capital letter, one lowercase and one special character.</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>New password</mat-label>
           <input type="password" matInput formControlName="newPassword" required>
           <mat-error *ngIf="pwForm.controls['newPassword'].errors">New password
-            must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+            must be at least 8 chars long and have one number, one capital letter, one lowercase and one special character.</mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-label>Confirm new password</mat-label>

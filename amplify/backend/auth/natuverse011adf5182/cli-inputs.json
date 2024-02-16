@@ -1,10 +1,10 @@
 {
   "version": "1",
   "cognitoConfig": {
-    "identityPoolName": "natuverse01e20f3765_identitypool_e20f3765",
+    "identityPoolName": "natuverse011adf5182_identitypool_1adf5182",
     "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "natuvee20f3765",
-    "userPoolName": "natuverse01e20f3765_userpool_e20f3765",
+    "resourceNameTruncated": "natuve1adf5182",
+    "userPoolName": "natuverse011adf5182_userpool_1adf5182",
     "autoVerifiedAttributes": [
       "email"
     ],
@@ -31,15 +31,20 @@
     "userpoolClientReadAttributes": [
       "email"
     ],
-    "userpoolClientLambdaRole": "natuvee20f3765_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "natuve1adf5182_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "e20f3765",
-    "resourceName": "natuverse01e20f3765",
+    "sharedId": "1adf5182",
+    "resourceName": "natuverse011adf5182",
     "authSelections": "identityPoolAndUserPool",
-    "useDefault": "default",
+    "useDefault": "defaultSocial",
+    "hostedUI": true,
     "usernameAttributes": [
       "email"
     ],
+    "hostedUIDomainName": "natuverse011adf5182-1adf5182",
+    "authProvidersUserPool": [],
+    "hostedUIProviderMeta": "[]",
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"http://localhost:4200/auth/signin/\"],\"LogoutURLs\":[\"http://localhost:4200/auth/signin/\"]}",
     "userPoolGroupList": [],
     "serviceName": "Cognito",
     "usernameCaseSensitive": false,

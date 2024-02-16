@@ -8,7 +8,7 @@
         <mat-label>Password</mat-label>
         <input type="password" matInput formControlName="password" required>
         <mat-error *ngIf="form.controls['password'].errors">Password
-          must be at least 8 chars long and have one number, one capital letter and one special character.</mat-error>
+          must be at least 8 chars long and have one number, one capital letter, one lowercase and one special character.</mat-error>
       </mat-form-field>
       <mat-form-field>
         <mat-label>Confirm Password</mat-label>

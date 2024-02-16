@@ -28,6 +28,11 @@ export class AppComponent {
     this.authService.getCurrentSession();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.auth_loading = this.authService.auth_loading$;
+
+    
+  }
+  goTo(){
+  
   }
 
   title = 'natuverse-01';

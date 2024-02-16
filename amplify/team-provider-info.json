@@ -1,19 +1,19 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-natuverse01-dev-114717-authRole",
-      "UnauthRoleArn": "arn:aws:iam::801916976933:role/amplify-natuverse01-dev-114717-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::801916976933:role/amplify-natuverse01-dev-114717-authRole",
+      "AuthRoleName": "amplify-natuverse01-dev-181326-authRole",
+      "UnauthRoleArn": "arn:aws:iam::643022017701:role/amplify-natuverse01-dev-181326-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::643022017701:role/amplify-natuverse01-dev-181326-authRole",
       "Region": "eu-west-3",
-      "DeploymentBucketName": "amplify-natuverse01-dev-114717-deployment",
-      "UnauthRoleName": "amplify-natuverse01-dev-114717-unauthRole",
-      "StackName": "amplify-natuverse01-dev-114717",
-      "StackId": "arn:aws:cloudformation:eu-west-3:801916976933:stack/amplify-natuverse01-dev-114717/42175a20-ca5d-11ee-b6a3-0ac2953f9af6",
-      "AmplifyAppId": "d17kgnvjo59q9q"
+      "DeploymentBucketName": "amplify-natuverse01-dev-181326-deployment",
+      "UnauthRoleName": "amplify-natuverse01-dev-181326-unauthRole",
+      "StackName": "amplify-natuverse01-dev-181326",
+      "StackId": "arn:aws:cloudformation:eu-west-3:643022017701:stack/amplify-natuverse01-dev-181326/89332230-cc25-11ee-9b68-0a0f0c14c677",
+      "AmplifyAppId": "d89bey4pc52zx"
     },
     "categories": {
       "auth": {
-        "natuverse01e20f3765": {}
+        "natuverse011adf5182": {}
       }
     }
   }

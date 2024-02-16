@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, signIn, signOut, signUp, type SignInInput } from 'aws-amplify/auth';
+import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, signIn, signOut, signUp, type SignInInput, signInWithRedirect } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { language, UserOrNull } from '../models/user';
 import { resolveNavigation } from '../shared/helpers/navigation';
@@ -12,6 +12,7 @@ export class AuthService {
   router=inject(Router);
 
   pendingEmail:undefined|string;
+
 
   //STREAMS
   isLoggedInSubj = new BehaviorSubject<boolean>(false);
@@ -43,6 +44,10 @@ export class AuthService {
   //   // this.auth_loadingSubj.next(false);
   //   this.auth_loading.set(false);
   // }
+
+  loginWithGoogle(){
+    signInWithRedirect({ provider: 'Google' });
+  }
 
   //OBTÉ TOTA LA INFORMACIÓ NECESSÀRIA DE L'USUARI, ÉS EL QUE GENERALMENT ES CRIDA DES DELS COMPONENTS
   async getCurrentSession() {
