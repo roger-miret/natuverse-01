@@ -73,6 +73,9 @@ export class AuthService {
       console.log('access token: '+accessToken);
       console.log('id token'+idToken);
       this.auth_loading$.set(false);
+      if(this.userSubj.getValue()?.dark_mode_pref=='1'){
+        document.body.classList.toggle("dark-theme");
+      }
       return true;
     } catch (err) {
       console.log(err);
