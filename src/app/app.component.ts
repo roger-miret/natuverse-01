@@ -24,15 +24,29 @@ export class AppComponent {
   isLoggedIn$!:Observable<boolean>;
   auth_loading = signal<any>(false);
   
-  ngOnInit(){
-    this.authService.getCurrentSession();
+  async ngOnInit(){
+    const isUser = await this.authService.getCurrentSession();
     this.isLoggedIn$ = this.authService.isLoggedIn$;
     this.auth_loading = this.authService.auth_loading$;
-
-    
+    // this.logginGoogleCognito();
+    //url dl botó d cognito: https://ui-mat.auth.eu-west-3.amazoncognito.com/oauth2/authorize?client_id=2gbgjkcaiu4dif12c82lbageqt&response_type=token&scope=email+openid+phone&redirect_uri=http%3A%2F%2Flocalhost%3A4200Ç
   }
-  goTo(){
-  
+
+  loginGoogle(){
+    window.location.href="https://ui-mat.auth.eu-west-3.amazoncognito.com/oauth2/authorize?identity_provider=Google&redirect_uri=http://localhost:4200&response_type=CODE&client_id=2gbgjkcaiu4dif12c82lbageqt&scope=email openid phone"
+  }
+
+  logginGoogleCognito(){
+    this.authService.loginWithGoogle();
+  }
+
+  getUser(){
+    this.authService.getCurrentAuthenticatedUser();
+  }
+
+  toggleDarkMode(){
+    document.body.classList.toggle("dark-theme");
+
   }
 
   title = 'natuverse-01';

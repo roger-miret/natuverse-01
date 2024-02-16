@@ -1,0 +1,7 @@
+@import "./../../utils/variables/main-variables";
+
+body{
+    .mat-mdc-card{
+        background-color:var(--background-color);
+    }
+}

@@ -13,7 +13,12 @@
     },
     "categories": {
       "auth": {
-        "natuverse011adf5182": {}
+        "natuverse01aae2e6c5": {
+          "userPoolId": "eu-west-3_v0E54Y0Bo",
+          "userPoolName": "ui-mat",
+          "webClientId": "2gbgjkcaiu4dif12c82lbageqt",
+          "nativeClientId": "2gbgjkcaiu4dif12c82lbageqt"
+        }
       }
     }
   }

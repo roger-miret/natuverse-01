@@ -4,7 +4,7 @@ import { AuthService } from './services/auth.service';
 import { isLoggedInGuard } from './shared/guards/is-logged-in.guard';
 import { isTuristearGuard } from './shared/guards/is-turistear.guard';
 import { isTaxonomiaGuard } from './shared/guards/is-taxonomia.guard';
-import { ROUTE_AUTH, ROUTE_CONFIG, ROUTE_TAXONOMIA, ROUTE_TURISTEAR } from './routes/route-names';
+import { ROUTE_AUTH, ROUTE_CONFIG, ROUTE_INFO, ROUTE_TAXONOMIA, ROUTE_TURISTEAR } from './routes/route-names';
 
 //tipejar rutes?
 export const routes: Routes = [
@@ -14,6 +14,7 @@ export const routes: Routes = [
     { path: ROUTE_TAXONOMIA, canActivate:[isLoggedInGuard, isTaxonomiaGuard], loadComponent:() => import('./features/mocks/mock-taxonomia/mock-taxonomia.component').then(m=>m.MockTaxonomiaComponent)},
     { path: ROUTE_AUTH, loadChildren: () => import('../app/routes/auth-routes').then(mod=>mod.AUTH_ROUTES) },
     { path: ROUTE_CONFIG, canActivate:[isLoggedInGuard], loadChildren: () => import('./routes/config-routes').then(mod=>mod.SETTINGS_ROUTES) },
+    { path: ROUTE_INFO, loadChildren: () => import('../app/routes/info-routes').then(mod=>mod.INFO_ROUTES) },
     // { path: 'cookies-policy', loadComponent: () => import('./app/cookies-policy/cookies-policy.component').then(m => m.CookiesPolicyComponent) },
     { path: '**', pathMatch: 'full', component: PageNotFoundComponent }
   ];

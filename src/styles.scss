@@ -1,4 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+// @import '~material-design-icons-iconfont/src/material-design-icons';
+@import "scss/utils/variables/_main-variables";
+@import "scss/components/am-components/mat-card.scss";
+@import "scss/components/am-components/mat-toolbar.scss";
 
 html, body { height: 100%; }
 body, app-root {
@@ -7,4 +11,29 @@ body, app-root {
     min-height: 100vh;
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
+
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size:var(--text-size);
 }
+  
+  body.dark-theme {
+    background-color: var(--background-color);
+    color: var(--text-color);
+  }
+
+  button{
+    background-color: var(--background-color);
+    color: var(--text-color);   
+  }
+
+@font-face {
+    font-family: 'Roboto';
+    src: local('Roboto'), url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+    font-weight: 400;
+  }
+
+  a{
+    color: var(--text-color);
+    background-color: var(--background-color);
+  }

@@ -1,6 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, signIn, signOut, signUp, type SignInInput, signInWithRedirect } from 'aws-amplify/auth';
+import { autoSignIn, confirmSignUp, fetchAuthSession, fetchUserAttributes, signIn, signOut, signUp, type SignInInput, signInWithRedirect, getCurrentUser } from 'aws-amplify/auth';
 import { BehaviorSubject } from 'rxjs';
 import { language, UserOrNull } from '../models/user';
 import { resolveNavigation } from '../shared/helpers/navigation';
@@ -26,27 +26,25 @@ export class AuthService {
   constructor() { }
 
   //POTSER NO CAL, atès que només obté userId i username, mentre que getCurrentSession obté més dades (token)
-  // async getCurrentAuthenticatedUser() {
-  //   // this.auth_loadingSubj.next(true);
-  //   this.auth_loading.set(true);
-  //   try {
-  //     const { username, userId, signInDetails } = await getCurrentUser();
-  //     console.log(`The username: ${username}`);
-  //     console.log(`The userId: ${userId}`);
-  //     console.log(`The signInDetails: ${signInDetails}`);//Abans això retornava valor, ara no ('undefined')(?)
-  //     this.signinDetails=signInDetails;
-  //     this.isLoggedInSubj.next(true);
-  //     this.currentuserSubj.next(username);//he de traspassar-ho tot, no sols username
-  //   } catch (err) {
-  //     console.log(err);
-  //     console.log('no hi ha usuari autenticat');
-  //   }
-  //   // this.auth_loadingSubj.next(false);
-  //   this.auth_loading.set(false);
-  // }
+  async getCurrentAuthenticatedUser() {
+    // this.auth_loadingSubj.next(true);
+    this.auth_loading$.set(true);
+    try {
+      const { username, userId, signInDetails } = await getCurrentUser();
+      console.log(`The username: ${username}`);
+      console.log(`The userId: ${userId}`);
+      console.log(`The signInDetails: ${signInDetails}`);//Abans això retornava valor, ara no ('undefined')(?)
+      this.isLoggedInSubj.next(true);
+    } catch (err) {
+      console.log(err);
+      console.log('no hi ha usuari autenticat');
+    }
+    // this.auth_loadingSubj.next(false);
+    this.auth_loading$.set(false);
+  }
 
   loginWithGoogle(){
-    signInWithRedirect({ provider: 'Google' });
+    signInWithRedirect();
   }
 
   //OBTÉ TOTA LA INFORMACIÓ NECESSÀRIA DE L'USUARI, ÉS EL QUE GENERALMENT ES CRIDA DES DELS COMPONENTS
@@ -74,9 +72,13 @@ export class AuthService {
       }
       console.log('access token: '+accessToken);
       console.log('id token'+idToken);
+      this.auth_loading$.set(false);
+      return true;
     } catch (err) {
       console.log(err);
       this.isLoggedInSubj.next(false);
+      this.auth_loading$.set(false);
+      return false;
     }
     this.auth_loading$.set(false);
     //temporal mentre faig config

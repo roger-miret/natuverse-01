@@ -1,6 +1,7 @@
 :host{
     display:block;
-    min-height:80%;
+
+    margin: 3em 0em; 
 }
 .nv-container{
     min-height:80%;
@@ -12,5 +13,25 @@
     display:flex;
     justify-content: space-between;
     gap:2rem;
-    width:30%;
 }
+
+.example-card {
+    max-width: 400px;
+  }
+
+  .example-card img{
+    height: 300px;
+    object-fit:cover;
+  }
+
+  .example-card p{
+    margin-block-start:1rem;
+  }
+  
+  @media(width<860px) {
+    .nv-container-buttonContainer{
+        flex-direction:column;
+        justify-content: space-between;
+        gap:2rem;
+    }
+  }
